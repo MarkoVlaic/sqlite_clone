@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "InputBuffer.h"
+#include "MetaCommand.h"
 
 int main() {
 
@@ -13,8 +14,20 @@ int main() {
     print_prompt();
     read_input(input_buffer);
 
-    if(strcmp(input_buffer->buffer, ".exit") == 0)exit(EXIT_SUCCESS);
-    else printf("Unknown command %s\n", input_buffer->buffer);
+    /*TODO: Process meta commands*/
+
+    if(input_buffer->buffer[0] == '.'){
+      switch (process_meta_command(input_buffer)){
+        case META_SUCCESS:continue;
+        case META_FAILURE:
+          printf("Unknown meta command %s\n", input_buffer->buffer);
+          continue;
+      }
+    }
+
+    /*TODO: Process statements*/
+
+
   }
 
   return 0;
