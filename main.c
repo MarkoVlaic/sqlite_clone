@@ -5,6 +5,7 @@
 
 #include "InputBuffer.h"
 #include "MetaCommand.h"
+#include "Statement.h"
 
 int main() {
 
@@ -14,8 +15,8 @@ int main() {
     print_prompt();
     read_input(input_buffer);
 
-    /*TODO: Process meta commands*/
 
+    //Process meta commands
     if(input_buffer->buffer[0] == '.'){
       switch (process_meta_command(input_buffer)){
         case META_SUCCESS:continue;
@@ -24,9 +25,18 @@ int main() {
           continue;
       }
     }
+    
+    //Process statements
+    Statement statement;
+    switch (prepare_statement(input_buffer, &statement)) {
+      case PREPARE_SUCCESS:
+        break;
+      case PREPARE_FAILURE:
+        printf("Unknown statement %s\n", input_buffer->buffer);
+        continue;
+    }
 
-    /*TODO: Process statements*/
-
+    execute_statement(&statement);
 
   }
 
