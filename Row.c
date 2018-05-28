@@ -29,12 +29,25 @@ uint32_t get_row_size() {
 }
 
 void serialize_row(Row* source, void* destination) {
+  /*
+    param: source - row to serialize
+    param: destination - memory address in which the row will be serialized
+
+    Translates the row struct in a series of bytes in memory
+  */
   memcpy(destination + ID_OFFSET, &(source->id), ID_SIZE);
   memcpy(destination + USERNAME_OFFSET, &(source->username), USERNAME_SIZE);
   memcpy(destination + EMAIL_OFFSET, &(source->email), EMAIL_SIZE);
 }
 
 void deserialize_row(void* source, Row* destination) {
+  /*
+    param: source - memory address of a serialized row
+    param: destination - struct in which the memory will be deserialized
+
+    Translates the memory representation of a row into the row struct
+  */
+
   memcpy(&(destination->id), source+ID_OFFSET, ID_SIZE);
   memcpy(&(destination->username), source+USERNAME_OFFSET, USERNAME_SIZE);
   memcpy(&(destination->email), source+EMAIL_OFFSET, EMAIL_SIZE);

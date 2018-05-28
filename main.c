@@ -42,6 +42,12 @@ int main() {
       case PREPARE_SYNTAX_ERROR:
         printf("SyntaxError in %s\n", input_buffer->buffer);
         continue;
+      case PREPARE_STRING_TOO_LONG:
+        printf("String in %s is too long\n", input_buffer->buffer);
+        continue;
+      case PREPARE_NEGATIVE_ID:
+        printf("Id must be positive\n");
+        continue;
     }
 
     switch (execute_statement(&statement, table)) {

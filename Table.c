@@ -9,6 +9,13 @@ uint32_t mod(uint32_t a, uint32_t b) {
 
 void* row_slot(Table* table, uint32_t row_num) {
 
+  /*
+    param: table - table to search
+    param: row_num - index of a row we want to find in memory
+
+    returns: Memory address of the row with index row_num in memory
+  */
+
   uint32_t page_num = row_num/ROWS_PER_PAGE;
   void* page = table->pages[page_num];
 

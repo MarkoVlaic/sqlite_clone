@@ -8,7 +8,9 @@
 enum PrepareResult_t {
   PREPARE_SUCCESS,
   PREPARE_FAILURE,
-  PREPARE_SYNTAX_ERROR
+  PREPARE_SYNTAX_ERROR,
+  PREPARE_STRING_TOO_LONG,
+  PREPARE_NEGATIVE_ID
 };
 typedef enum PrepareResult_t PrepareResult;
 
