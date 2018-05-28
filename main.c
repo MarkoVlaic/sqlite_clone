@@ -6,10 +6,15 @@
 #include "InputBuffer.h"
 #include "MetaCommand.h"
 #include "Statement.h"
+#include "Row.h"
+#include "Table.h"
 
 int main() {
 
+  Table* table = new_table();
   InputBuffer* input_buffer = new_input_buffer();
+
+  init_row_units();
 
   while(true){
     print_prompt();
@@ -25,7 +30,7 @@ int main() {
           continue;
       }
     }
-    
+
     //Process statements
     Statement statement;
     switch (prepare_statement(input_buffer, &statement)) {
@@ -34,9 +39,19 @@ int main() {
       case PREPARE_FAILURE:
         printf("Unknown statement %s\n", input_buffer->buffer);
         continue;
+      case PREPARE_SYNTAX_ERROR:
+        printf("SyntaxError in %s\n", input_buffer->buffer);
+        continue;
     }
 
-    execute_statement(&statement);
+    switch (execute_statement(&statement, table)) {
+      case EXECUTE_SUCCESS:
+        printf("Executed\n");
+        break;
+      case EXECUTE_TABLE_FULL:
+        printf("Cannot insert into the database\n");
+        break;
+    }
 
   }
 
